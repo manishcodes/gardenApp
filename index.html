@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Leaflet sample</title>
+      <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+      <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+      <script src="js/kml.js"></script>
+      <script src="plugins/leaflet.ajax.min.js"></script>
+      <style>
+         body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+      </style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   </head>
+
+   <body>
+      <div id = "map"></div>
+      <script>
+         var gardenPointLayers;
+         // Creating map options
+         var mapOptions = {
+            center: [11.4010, 76.6838], 
+            zoom: 21
+         }
+         
+         // Creating a map object
+         var map = new L.map('map', mapOptions);
+         
+         // Creating a Layer object
+         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         var layerKarnatakaGarden = new L.imageOverlay('assets/testImg1.png',[[11.402839908787264,76.6852570126544],
+         [11.395477956926253,76.68092250666123]],{opacity : 0.8}).addTo(map);
+         gardenPointLayers = new L.GeoJSON.AJAX('data/points.geojson').addTo(map);
+         // Adding layer to the map
+         map.addLayer(layer);
+         map.addLayer(layerKarnatakaGarden);
+
+         // Load kml file
+         // fetch('assets/KGH.kml')
+         //        .then(res => res.text())
+         //        .then(kmltext => {
+         //            // Create new kml overlay
+         //            const parser = new DOMParser();
+         //            const kml = parser.parseFromString(kmltext, 'text/xml');
+         //            const track = new L.KML(kml);
+         //            map.addLayer(track);
+
+         //            // Adjust map to show the kml
+         //            const bounds = track.getBounds();
+         //            map.fitBounds(bounds);
+         //        });
+      </script>
+   </body>
+   
+</html>

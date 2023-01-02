@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+  <Document>
+      <GroundOverlay>
+        <Icon>
+          <href>MapPlan_Orthomosaic_export_ThuDec22134704197420.jpg</href>
+        </Icon>
+        <LatLonBox>
+          <north>11.402839908787264</north>
+          <south>11.395477956926253</south>
+          <east>76.6852570126544</east>
+          <west>76.68092250666123</west>
+        </LatLonBox>
+        <name>MapPlan_Orthomosaic_export_ThuDec22134704197420.jpg</name>
+        <drawOrder>1</drawOrder>
+      </GroundOverlay>
+  </Document>
+</kml>
