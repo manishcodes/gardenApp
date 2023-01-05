@@ -45,7 +45,19 @@ html, body, #map {
          function returnGardenMarkers(json, latlng)
          {
             var jsonInfo = json.properties;
-            return L.circleMarker(latlng,{radius:10,color:'deeppink'}).bindTooltip("<h4>"+jsonInfo.Name+"</h4>");
+
+            if(jsonInfo.type == 'building')
+            {
+               var col = 'deeppink';
+            }
+            else if(jsonInfo.type == 'amenity'){
+               var col = 'yellow';
+            }
+            else if(jsonInfo.type == 'hotspot')
+            {
+               var col = 'blue';
+            }
+            return L.circleMarker(latlng,{radius:10,color:col}).bindTooltip("<h4>"+jsonInfo.Name+"</h4>"+"<h4>"+jsonInfo.type+"</h4>");
             // return L.circleMarker(latlng,{radius:10,color:'deeppink'}).on('click',onClick(json));
          }
 
