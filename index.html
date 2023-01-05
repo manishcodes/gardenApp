@@ -27,7 +27,7 @@ html, body, #map {
          // Creating map options
          var mapOptions = {
             center: [11.4010, 76.6838], 
-            zoom: 21
+            zoom: 19
          }
          
          // Creating a map object
@@ -37,10 +37,24 @@ html, body, #map {
          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
          var layerKarnatakaGarden = new L.imageOverlay('assets/testImg1.png',[[11.402839908787264,76.6852570126544],
          [11.395477956926253,76.68092250666123]],{opacity : 0.8}).addTo(map);
-         gardenPointLayers = new L.GeoJSON.AJAX('data/points.geojson').addTo(map);
+         gardenPointLayers = new L.GeoJSON.AJAX('data/points.geojson',{pointToLayer:returnGardenMarkers}).addTo(map);
          // Adding layer to the map
          map.addLayer(layer);
          map.addLayer(layerKarnatakaGarden);
+
+         function returnGardenMarkers(json, latlng)
+         {
+            var jsonInfo = json.properties;
+            return L.circleMarker(latlng,{radius:10,color:'deeppink'}).bindTooltip("<h4>"+jsonInfo.Name+"</h4>");
+            // return L.circleMarker(latlng,{radius:10,color:'deeppink'}).on('click',onClick(json));
+         }
+
+         function onClick(json)
+         {
+            var jsonAtt = json.properties;
+            // console.log(jsonAtt.Name)
+            return jsonAtt.Name;
+         }
 
          // Load kml file
          // fetch('assets/KGH.kml')
