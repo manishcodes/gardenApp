@@ -1,72 +1,91 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>Leaflet sample</title>
-      <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.css"/>
-      <script src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.js"></script>
-      <script src="js/kml.js"></script>
-      <script src="plugins/leaflet.ajax.min.js"></script>
-      <style>
-         body {
-    padding: 0;
-    margin: 0;
-}
-html, body, #map {
-    height: 100%;
-    width: 100vw;
-}
-      </style>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-   </head>
+<head>
+   <title>Leaflet sample</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.css" />
+   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.js"></script>
+   <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+   <script src="js/kml.js"></script>
+   <script src="plugins/leaflet.ajax.min.js"></script>
+   <style>
+      body {
+         padding: 0;
+         margin: 0;
+      }
 
-   <body>
-      <div id = "map"></div>
-      <script>
-         var gardenPointLayers;
-         // Creating map options
-         var mapOptions = {
-            center: [11.4010, 76.6838], 
-            zoom: 19
+      html,
+      body,
+      #map {
+         height: 100%;
+         width: 100vw;
+      }
+   </style>
+
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+   <div id="map"></div>
+   <script>
+      var gardenPointLayers;
+      // Creating map options
+      var mapOptions = {
+         center: [11.4010, 76.6838],
+         zoom: 18
+      }
+
+      // Creating a map object
+      var map = new L.map('map', mapOptions);
+
+      // Creating a Layer object
+      // var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+      var layer = new L.TileLayer('',{ maxZoom: 21,minZoom: 17});
+      var layerKarnatakaGarden = new L.imageOverlay('assets/testImg1.png', [[11.402839908787264, 76.6852570126544],
+      [11.395477956926253, 76.68092250666123]], { opacity: 0.8 }).addTo(map);
+      gardenPointLayers = new L.GeoJSON.AJAX('data/points.geojson', { pointToLayer: returnGardenMarkers }).addTo(map);
+      // Adding layer to the map
+      map.addLayer(layer);
+      map.addLayer(layerKarnatakaGarden);
+
+      var southWest = L.latLng(11.402839908787264, 76.6852570126544),
+      northEast = L.latLng(11.395477956926253, 76.68092250666123),
+      mybounds = L.latLngBounds(southWest, northEast);
+      map.setMaxBounds(mybounds);
+
+      console.log(map.getBounds());
+
+      console.log(mybounds);
+
+      // L.Routing.control({
+      //    waypoints: [
+      //       L.latLng(11.402271873233801,76.684343279075804),
+      //       L.latLng(11.3989518633229,76.681833509311801)
+      //    ]
+      // }).addTo(map);
+
+      function returnGardenMarkers(json, latlng) {
+         var jsonInfo = json.properties;
+
+         if (jsonInfo.type == 'building') {
+            var col = 'deeppink';
          }
-         
-         // Creating a map object
-         var map = new L.map('map', mapOptions);
-         
-         // Creating a Layer object
-         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-         var layerKarnatakaGarden = new L.imageOverlay('assets/testImg1.png',[[11.402839908787264,76.6852570126544],
-         [11.395477956926253,76.68092250666123]],{opacity : 0.8}).addTo(map);
-         gardenPointLayers = new L.GeoJSON.AJAX('data/points.geojson',{pointToLayer:returnGardenMarkers}).addTo(map);
-         // Adding layer to the map
-         map.addLayer(layer);
-         map.addLayer(layerKarnatakaGarden);
-
-         function returnGardenMarkers(json, latlng)
-         {
-            var jsonInfo = json.properties;
-
-            if(jsonInfo.type == 'building')
-            {
-               var col = 'deeppink';
-            }
-            else if(jsonInfo.type == 'amenity'){
-               var col = 'yellow';
-            }
-            else if(jsonInfo.type == 'hotspot')
-            {
-               var col = 'blue';
-            }
-            return L.circleMarker(latlng,{radius:10,color:col}).bindTooltip("<h4>"+jsonInfo.Name+"</h4>"+"<h4>"+jsonInfo.type+"</h4>");
-            // return L.circleMarker(latlng,{radius:10,color:'deeppink'}).on('click',onClick(json));
+         else if (jsonInfo.type == 'amenity') {
+            var col = 'yellow';
          }
-
-         function onClick(json)
-         {
-            var jsonAtt = json.properties;
-            // console.log(jsonAtt.Name)
-            return jsonAtt.Name;
+         else if (jsonInfo.type == 'hotspot') {
+            var col = 'blue';
          }
+         return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+         // return L.circleMarker(latlng,{radius:10,color:'deeppink'}).on('click',onClick(json));
+      }
+
+      function onClick(json) {
+         var jsonAtt = json.properties;
+         // console.log(jsonAtt.Name)
+         return jsonAtt.Name;
+      }
 
          // Load kml file
          // fetch('assets/KGH.kml')
@@ -82,7 +101,7 @@ html, body, #map {
          //            const bounds = track.getBounds();
          //            map.fitBounds(bounds);
          //        });
-      </script>
-   </body>
-   
+   </script>
+</body>
+
 </html>
