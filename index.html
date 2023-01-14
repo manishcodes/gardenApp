@@ -29,11 +29,18 @@
 <body>
    <div id="map"></div>
    <script>
+      //page url = http://127.0.0.1:5500/index.html?p1=11.4010&p2=76.6838
+   
+      const myKeyValues = window.location.search;
+      const urlParams = new URLSearchParams(myKeyValues);
+
+      const param1 = urlParams.get('p1');
+      const param2 = urlParams.get('p2');
       var gardenPointLayers;
       // Creating map options
       var mapOptions = {
-         center: [11.4010, 76.6838],
-         zoom: 18
+         center: [param1, param2],
+         zoom: 22
       }
 
       // Creating a map object
