@@ -1,0 +1,71 @@
+#title{
+    align-items: center;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #E5FDD1;
+    font-family: 'Courier New', Courier, monospace;
+    color: #008CBA;
+}
+
+#my-content{
+    background-color: #E5FDD1;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 80%;
+    height: 75%;
+    text-align: center;
+
+    /* opacity: 50%; */
+}
+
+#my-content img{
+    width: 90%;
+    padding: 10px;
+}
+
+#my-content .info{
+    padding: 10px;
+    text-align: left;
+    position: fixed;
+    /* background-color: red; */
+    overflow:hidden;
+    overflow-y: scroll;
+     height: 50%;
+}
+
+#my-content .info-btns{
+    /* background-color: #257fca; */
+    position:absolute;
+    display: block;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+
+#my-content .info-btns .close-btn .button{
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+#my-content .info-btns .close-btn{
+  background-color: #008CBA;
+  color: white;
+}
+
+#my-content .info-btns .link-btn{
+    
+    background-color: #4CAF50;
+    color: white;
+}

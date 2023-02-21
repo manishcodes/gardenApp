@@ -1,4 +1,12 @@
   //page url = http://127.0.0.1:5500/index.html?p1=11.401736541896099&p2=76.683730423760906
+
+  const infoPanelClose = document.getElementById('close-info');
+  const contentBox = document.getElementById('my-content');
+
+  infoPanelClose.onclick = ()=>{
+   
+   contentBox.style.visibility = 'hidden';
+  }
    
   const myKeyValues = window.location.search;
   const urlParams = new URLSearchParams(myKeyValues);
@@ -54,9 +62,9 @@
   // }).addTo(map);
 
   var myIcon = L.icon({
-  iconUrl: 'assets/flowerPot.png',
-  iconSize: [38, 95],
-  iconAnchor: [22, 94],
+  iconUrl: 'assets/buildingIcon90.png',
+  iconSize: [90, 90],
+  iconAnchor: [40, 90],
   popupAnchor: [-3, -76],
 });
 
@@ -80,7 +88,7 @@
      else{
         return null;
      }
-     return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+     return L.circleMarker(latlng, { radius: 10, color: col }).bindPopup("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.description + "</h4>").openPopup();
   }
 
   function returnBuildingMarkers(json,latlng){
@@ -99,11 +107,14 @@
     if (jsonInfo.type == 'qr') {
         var col = 'red';
     }
+
      else{
         return null;
      }
-     return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
-  }
+   //   return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+     return L.marker(latlng).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+   //   return L.marker(latlng, {icon: myIcon}).addTo(map);
+   }
 
 //   function returnGardenMarkers(json, latlng) {
 //      var jsonInfo = json.properties;
