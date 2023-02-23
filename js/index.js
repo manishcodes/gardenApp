@@ -2,10 +2,19 @@
 
   const infoPanelClose = document.getElementById('close-info');
   const contentBox = document.getElementById('my-content');
+  const contenBoxInfo = document.getElementById('content-info');
+  const contetnBoxImg = document.getElementById('content-img');
 
   infoPanelClose.onclick = ()=>{
    
    contentBox.style.visibility = 'hidden';
+  }
+
+  function openInfoPanel (title,img,info,link){
+   contentBox.style.visibility = 'visible';
+   contetnBoxImg.src = img;
+   contenBoxInfo.innerText = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?';
+   console.log(title+link);
   }
    
   const myKeyValues = window.location.search;
@@ -61,12 +70,26 @@
   //    ]
   // }).addTo(map);
 
-  var myIcon = L.icon({
-  iconUrl: 'assets/buildingIcon90.png',
+  var buildingIcon = L.icon({
+  iconUrl: 'assets/icons/building.png',
   iconSize: [90, 90],
   iconAnchor: [40, 90],
   popupAnchor: [-3, -76],
 });
+
+var amenityIcon = L.icon({
+   iconUrl: 'assets/icons/amenity.png',
+   iconSize: [90, 90],
+   iconAnchor: [40, 90],
+   popupAnchor: [-3, -76],
+ });
+
+ var hotspotIcon = L.icon({
+   iconUrl: 'assets/icons/hotspot.png',
+   iconSize: [90, 90],
+   iconAnchor: [40, 90],
+   popupAnchor: [-3, -76],
+ });
 
   function returnHotspotMarkers(json,latlng){
     var jsonInfo = json.properties;
@@ -77,7 +100,14 @@
      else{
         return null;
      }
-     return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+   // //   return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+   // return L.circleMarker(latlng, { radius: 10, color: col }).on('click',function(e){
+   //    openInfoPanel(jsonInfo.Name,'assets/garden.jpg',jsonInfo.description,'link');
+   // });
+
+   return L.marker(latlng, {icon: hotspotIcon}).addTo(map).on('click',function(e){
+         openInfoPanel(jsonInfo.Name,'assets/garden.jpg',jsonInfo.description,'link');
+      });;
   }
 
   function returnAmenityMarkers(json,latlng){
@@ -88,7 +118,8 @@
      else{
         return null;
      }
-     return L.circleMarker(latlng, { radius: 10, color: col }).bindPopup("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.description + "</h4>").openPopup();
+   //   return L.circleMarker(latlng, { radius: 10, color: col }).bindPopup("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.description + "</h4>").openPopup();
+   return L.marker(latlng, {icon: amenityIcon}).addTo(map);
   }
 
   function returnBuildingMarkers(json,latlng){
@@ -99,7 +130,8 @@
      else{
         return null;
      }
-     return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+   //   return L.circleMarker(latlng, { radius: 10, color: col }).bindTooltip("<h4>" + jsonInfo.Name + "</h4>" + "<h4>" + jsonInfo.type + "</h4>");
+   return L.marker(latlng, {icon: buildingIcon}).addTo(map);
   }
 
   function returnQrMarkers(json,latlng){

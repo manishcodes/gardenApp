@@ -18,6 +18,7 @@
     width: 80%;
     height: 75%;
     text-align: center;
+    visibility: hidden;
 
     /* opacity: 50%; */
 }
