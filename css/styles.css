@@ -70,3 +70,7 @@
     background-color: #4CAF50;
     color: white;
 }
+
+#textarea_nodes{
+    z-index: 1000;
+}
