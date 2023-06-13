@@ -43,7 +43,7 @@
   // Creating a Layer object
   // var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
   var layer = new L.TileLayer('',{ maxZoom: 21,minZoom: 18});
-  var layerKarnatakaGarden = new L.imageOverlay('assets/gardenMap.png', [[11.402839908787264, 76.6852570126544],
+  var layerKarnatakaGarden = new L.imageOverlay('assets/gardenMap.webp', [[11.402839908787264, 76.6852570126544],
   [11.395477956926253, 76.68092250666123]], { opacity: 0.8 }).addTo(map);
 //   gardenPointLayers = new L.GeoJSON.AJAX('data/points.geojson', { pointToLayer: returnGardenMarkers }).addTo(map);
 
@@ -73,22 +73,22 @@
   // }).addTo(map);
 
   var buildingIcon = L.icon({
-  iconUrl: 'assets/icons/building.png',
-  iconSize: [60, 60],
+  iconUrl: 'assets/icons/building.webp',
+  iconSize: [40, 40],
   iconAnchor: [27, 60],
   popupAnchor: [-3, -76],
 });
 
 var amenityIcon = L.icon({
-   iconUrl: 'assets/icons/amenity.png',
-   iconSize: [60, 60],
+   iconUrl: 'assets/icons/amenity.webp',
+   iconSize: [40, 40],
    iconAnchor: [27, 60],
    popupAnchor: [-3, -76],
  });
 
  var hotspotIcon = L.icon({
-   iconUrl: 'assets/icons/hotspot.png',
-   iconSize: [60, 60],
+   iconUrl: 'assets/icons/hotspot.webp',
+   iconSize: [40, 40],
    iconAnchor: [27, 60],
    popupAnchor: [-3, -76],
  });
